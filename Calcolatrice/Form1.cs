@@ -13,6 +13,7 @@ namespace Calcolatrice
 {
     public partial class Form1 : Form
     {
+        private Label ResultLabel;
         static private Color OPERATION_BG = Color.LightGray;
         static private Color NUMBER_BG = Color.WhiteSmoke;
         static private Color EQUAL_BG = Color.LightSeaGreen;
@@ -25,6 +26,10 @@ namespace Calcolatrice
             {
                 this.Content = content;
                 this.BgColor = Bgcolor;
+            }
+            public override string ToString()
+            {
+                return base.ToString();
             }
         }
         private btnStruct[,] buttons =
@@ -50,7 +55,22 @@ namespace Calcolatrice
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            MakeResultLabel();
             MakeButtons();
+        }
+
+        private void MakeResultLabel()
+        {
+            ResultLabel = new Label()
+            {
+                Font = new Font("SEGOE UI", 22, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleRight,
+                AutoSize = false,
+                Location = new Point(0, 0),
+                Size = new Size(this.Width,100),
+                BackColor = Color.Beige
+            };
+            Controls.Add(ResultLabel);
         }
 
         private void MakeButtons()
@@ -70,11 +90,17 @@ namespace Calcolatrice
                     btn.Font = new Font("Segoe UI",16);
                     btn.Text=buttons[i,j].Content.ToString();
                     btn.BackColor = buttons[i, j].BgColor;
+                    btn.Click += Btn_Click;
                     Controls.Add(btn);
                     posx+= btnWidth;
                 }
                 posY += btnHeight;
             }
+        }
+
+        private void Btn_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
